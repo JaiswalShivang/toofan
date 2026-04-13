@@ -456,7 +456,6 @@ func (m model) viewProfile(p theme.Palette) string {
 func heatGrid(activity map[string]int, p theme.Palette, width int) string {
 	now := time.Now()
 	days := []string{"mon", "tue", "wed", "thu", "fri", "sat", "sun"}
-	dows := []time.Weekday{time.Monday, time.Tuesday, time.Wednesday, time.Thursday, time.Friday, time.Saturday, time.Sunday}
 
 	c0 := lipgloss.NewStyle().Foreground(lipgloss.Color("#333333"))
 	c1 := lipgloss.NewStyle().Foreground(p.Accent)
@@ -467,15 +466,30 @@ func heatGrid(activity map[string]int, p theme.Palette, width int) string {
 		weeks = 1
 	}
 
+	// Find the most recent Monday (start of current week).
+	// All columns are anchored to this Monday so each column is a real calendar week.
+	weekStart := now
+	for weekStart.Weekday() != time.Monday {
+		weekStart = weekStart.AddDate(0, 0, -1)
+	}
+	weekStart = time.Date(weekStart.Year(), weekStart.Month(), weekStart.Day(), 0, 0, 0, 0, weekStart.Location())
+
 	var rows []string
-	for i, dow := range dows {
+	for dayOffset := 0; dayOffset < 7; dayOffset++ {
 		var row strings.Builder
-		row.WriteString(dim.Render(fmt.Sprintf("%3s  ", days[i])))
+		row.WriteString(dim.Render(fmt.Sprintf("%3s  ", days[dayOffset])))
 		for w := weeks - 1; w >= 0; w-- {
-			d := now.AddDate(0, 0, -w*7)
-			for d.Weekday() != dow {
-				d = d.AddDate(0, 0, -1)
+			// Column w: the Monday that is w weeks before weekStart
+			colMonday := weekStart.AddDate(0, 0, -w*7)
+			// The actual date for this row (dayOffset 0=Mon … 6=Sun)
+			d := colMonday.AddDate(0, 0, dayOffset)
+
+			// Don't mark future dates as active
+			if d.After(now) {
+				row.WriteString(c0.Render("■") + " ")
+				continue
 			}
+
 			if activity[d.Format("2006-01-02")] > 0 {
 				row.WriteString(c1.Render("■") + " ")
 			} else {
