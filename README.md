@@ -73,7 +73,7 @@ Your typing history, personal bests, rank, and activity map all in one place. Pr
 ## Install
 
 ```sh
-git clone https://github.com/vyrx/toofan.git
+git clone https://github.com/vyrx-dev/toofan.git
 cd toofan
 go build -o toofan .
 ./toofan
@@ -174,11 +174,11 @@ Yes. Everything runs locally and is embedded in the binary. No internet needed.
 <br>
 
 <div align="center">
-<a href="https://www.star-history.com/#vyrx/toofan&type=Date&legend=top-left">
+<a href="https://www.star-history.com/#vyrx-dev/toofan&type=Date&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=vyrx/toofan&type=Date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=vyrx/toofan&type=Date&legend=top-left" />
-   <img alt="toofan Star History Chart" src="https://api.star-history.com/svg?repos=vyrx/toofan&type=Date&legend=top-left" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=vyrx-dev/toofan&type=Date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=vyrx-dev/toofan&type=Date&legend=top-left" />
+   <img alt="toofan Star History Chart" src="https://api.star-history.com/svg?repos=vyrx-dev/toofan&type=Date&legend=top-left" />
  </picture>
 </a>
 </div>
