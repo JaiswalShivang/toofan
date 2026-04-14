@@ -22,13 +22,15 @@ set -e
     fi
     chmod +x /tmp/toofan
 
-    if [ -w "/usr/local/bin" ]; then
-        mv /tmp/toofan /usr/local/bin/toofan
-    else
-        sudo mv /tmp/toofan /usr/local/bin/toofan
-    fi
+    INSTALL_DIR="$HOME/.local/bin"
+    mkdir -p "$INSTALL_DIR"
+    mv /tmp/toofan "$INSTALL_DIR/toofan"
 
-    echo "Installed to /usr/local/bin/toofan"
+    echo "Installed to $INSTALL_DIR/toofan"
+    
+    # Export it to PATH temporarily so it runs immediately
+    export PATH="$INSTALL_DIR:$PATH"
+    
     sleep 0.5
-    /usr/local/bin/toofan
+    toofan
 }

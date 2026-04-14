@@ -9,87 +9,53 @@
 
 <img src="assets/main.gif" alt="toofan demo" width="750">
 
-<br>
-
-[**Install**](#install) &nbsp;·&nbsp; [**FAQ**](#faq) &nbsp;·&nbsp; [**Contribute**](#contributing)
-
 </div>
 
 ---
 
 ## Features
 
-- **Two modes** : English words or real code snippets
-- **Hand-written code lessons** : Practical, self-contained examples that teach a concept while you type
-- **Infinite mode** : No timer, type the full snippet at your own pace
-- **Lesson picker** : Choose what to practice instead of getting random code
-- **Live WPM** : Speed updates in real time as you type
-- **Personal bests** : Tracked per duration and mode
-- **Activity map** : Track how consistent you are across days
-- **Backup and restore** : Save your data and import it on any machine
-- **Multiple themes** : Match your terminal aesthetic
-- Press `?` inside the app for all available keybindings
+- **Two Modes:** Practice standard English words or real-world code snippets.
+- **Curated Lessons:** Hand-written, topic-based code exercises across multiple languages.
+- **Dynamic Themes:** Cycle between multiple aesthetic terminal themes (`ctrl+t`).
+- **Live Metrics:** Real-time WPM speed and accuracy tracking.
+- **Error Review:** See exactly which words you mistyped after every test.
+- **Ranks:** Automated progression system based on your typing speed.
+- **Offline & Local:** No browser, no account, zero telemetry.
 
-## Code Snippets
+<p align="center">
+  <img src="assets/code-snippets-grid.png" width="48%" title="Real Code Snippets" alt="Real Code Snippets" />
+  <img src="assets/lession-grid.png" width="48%" title="Curated Topics & Lessons" alt="Curated Topics & Lessons" />
+  <img src="assets/languages-grid.png" width="48%" title="Multiple Languages Supported" alt="Multiple Languages Supported" />
+  <img src="assets/theme-grid.png" width="48%" title="Dynamic Built-in Themes" alt="Dynamic Built-in Themes" />
+</p>
 
-Type real, practical code instead of random keywords. Each snippet is a small, self-contained example that builds muscle memory for `{}`, `=>`, `()`, `<-`, and all the symbols you actually use. Pick a lesson with `ctrl+o` or let it choose randomly. Set the timer to `∞` and the test ends when you finish the snippet.
+## Profile Dashboard
 
-<div align="center">
-<img src="assets/code-snippets.png" width="560">
-</div>
-
-## Supported Languages (contribute to add more)
-
-Go, JavaScript, Lua, Shell, Dart, etc.
+A personal overview of your typing speed history, personal bests across durations, and a daily activity map to keep you consistent. Press `ctrl+p` to open.
 
 <div align="center">
-<img src="assets/languages.png" width="560">
+<img src="assets/profile-new.png" width="95%">
 </div>
 
-## Lessons (for code mode)
+## Installation
 
-Hand-written lessons organized by topic. Each one teaches a real concept while you type. Not generated, not random.
-
-<div align="center">
-<img src="assets/lession.png" width="560">
-</div>
-
-## Themes
-
-I've always wanted my terminal to look good and match my setup. So toofan comes with multiple themes you can cycle through to match your aesthetic. Hit `ctrl+t` to switch.
-
-<div align="center">
-<img src="assets/theme.png" width="560">
-</div>
-
-## Profile
-
-Your typing history, personal bests, rank, and activity map all in one place. Press `ctrl+p` to open it anytime.
-
-<div align="center">
-<img src="assets/profile-page.png" width="600">
-</div>
-
-## Install
-
-**Quick Install (Mac / Linux):**
+### Quick Install (macOS & Linux)
 ```bash
 curl -fsSL https://raw.githubusercontent.com/vyrx-dev/toofan/master/install.sh | sh
 ```
 
-<br>
+### Package Managers
+Coming soon: AUR, Homebrew, Nix.
 
-**Build from Source (Requires Go installed):**
+### Build from Source
+If you prefer building manually (requires Go):
 ```sh
 git clone https://github.com/vyrx-dev/toofan.git
 cd toofan
 go build -o toofan .
 sudo mv toofan /usr/local/bin/toofan
 ```
-
-### Package Managers
-
-Coming soon: AUR (paru/yay), Homebrew, Nix.
 
 ## FAQ
 
@@ -109,20 +75,6 @@ accuracy = (total_chars - all_mistakes) / total_chars × 100
 </details>
 
 <details>
-<summary>How are ranks decided?</summary>
-
-Your rank is based on your average WPM over the last 10 word-mode tests:
-
-```text
-grandma      # below 30 wpm
-noob         # 30 to 50 wpm
-mid          # 50 to 80 wpm
-tryhard      # 80 to 120 wpm
-toofan       # 120+ wpm
-```
-</details>
-
-<details>
 <summary>Where are my files stored?</summary>
 
 Everything lives in `~/.toofan/` as plain text files:
@@ -136,6 +88,18 @@ Everything lives in `~/.toofan/` as plain text files:
 <summary>Can I backup my data?</summary>
 
 Yes. Press `ctrl+s` to save a backup and `ctrl+r` to restore from one. Backups are saved to `~/Toofan/` and can be moved between machines.
+</details>
+
+<details>
+<summary>How do I uninstall Toofan?</summary>
+
+If you installed via the `curl` Quick Install, simply delete the binary and the configuration folder:
+
+```bash
+rm ~/.local/bin/toofan
+rm -rf ~/.toofan
+```
+*(If you built it from source and moved it globally, run `sudo rm /usr/local/bin/toofan` instead).*
 </details>
 
 <details>
@@ -163,18 +127,6 @@ Yes. Everything runs locally and is embedded in the binary. No internet needed.
 
 - [Bubble Tea](https://github.com/charmbracelet/bubbletea) : TUI framework
 - [Lipgloss](https://github.com/charmbracelet/lipgloss) : Terminal styling
-
-<br>
-
-<div align="center">
-<a href="https://www.star-history.com/#vyrx-dev/toofan&type=Date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=vyrx-dev/toofan&type=Date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=vyrx-dev/toofan&type=Date&legend=top-left" />
-   <img alt="toofan Star History Chart" src="https://api.star-history.com/svg?repos=vyrx-dev/toofan&type=Date&legend=top-left" />
- </picture>
-</a>
-</div>
 
 ---
 
