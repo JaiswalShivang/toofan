@@ -101,7 +101,7 @@ func SavePB(duration int, mode string, wpm float64) {
 }
 
 func LoadConfig() (duration int, mode string, language string, difficulty string, themeName string) {
-	duration, mode, language, difficulty, themeName = 30, "words", "english", "easy", "tokyonight"
+	duration, mode, language, difficulty, themeName = 30, "words", "go", "easy", "tokyonight"
 
 	path := filepath.Join(dataDir, "config.txt")
 	f, err := os.Open(path)

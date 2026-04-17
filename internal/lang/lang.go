@@ -142,7 +142,7 @@ func init() {
 // RandomWords picks random words for the word-mode typing test
 func RandomWords(name string, difficulty string, count int) []string {
 	ld, ok := languages[name]
-	if !ok {
+	if !ok || len(ld.Words) == 0 {
 		ld = languages["english"]
 	}
 
@@ -174,12 +174,12 @@ func RandomWords(name string, difficulty string, count int) []string {
 }
 
 // RandomSnippet picks a random code snippet for code-mode typing.
-func RandomSnippet(name string) Snippet {
+func RandomSnippet(name string, difficulty string) Snippet {
 	ld, ok := languages[name]
 	if !ok || len(ld.Snippets) == 0 {
 		return Snippet{
 			Topic:   "Fallback Words",
-			Content: strings.Join(RandomWords(name, "easy", 50), " "),
+			Content: strings.Join(RandomWords(name, difficulty, 50), " "),
 		}
 	}
 
