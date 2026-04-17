@@ -96,21 +96,25 @@ func init() {
 		name := e.Name()
 		ld := &langData{Name: name}
 
-		// Read words.txt
-		if raw, err := fs.ReadFile(dataFS, "data/"+name+"/words.txt"); err == nil {
+		// Read easy.txt
+		if raw, err := fs.ReadFile(dataFS, "data/"+name+"/easy.txt"); err == nil {
 			words := strings.Fields(string(raw))
+			ld.EasyWords = append(ld.EasyWords, words...)
 			ld.Words = append(ld.Words, words...)
-			// Categorize words by length: easy (<=4 chars), medium (5-7), hard (>=8)
-			for _, word := range words {
-				switch {
-				case len(word) <= 4:
-					ld.EasyWords = append(ld.EasyWords, word)
-				case len(word) <= 7:
-					ld.MediumWords = append(ld.MediumWords, word)
-				default:
-					ld.HardWords = append(ld.HardWords, word)
-				}
-			}
+		}
+
+		// Read medium.txt
+		if raw, err := fs.ReadFile(dataFS, "data/"+name+"/medium.txt"); err == nil {
+			words := strings.Fields(string(raw))
+			ld.MediumWords = append(ld.MediumWords, words...)
+			ld.Words = append(ld.Words, words...)
+		}
+
+		// Read hard.txt
+		if raw, err := fs.ReadFile(dataFS, "data/"+name+"/hard.txt"); err == nil {
+			words := strings.Fields(string(raw))
+			ld.HardWords = append(ld.HardWords, words...)
+			ld.Words = append(ld.Words, words...)
 		}
 
 		lessons, _ := fs.ReadDir(dataFS, "data/"+name)
