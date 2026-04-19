@@ -28,11 +28,10 @@ aurs:
       install -Dm644 "./LICENSE" "${pkgdir}/usr/share/licenses/toofan/LICENSE"
 
 changelog:
-  disable: true
+  use: github-native
 
 release:
   github:
     owner: vyrx-dev
     name: toofan
   make_latest: true
-  generate_release_notes: true
