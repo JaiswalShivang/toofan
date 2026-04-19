@@ -27,11 +27,12 @@ aurs:
       # license
       install -Dm644 "./LICENSE" "${pkgdir}/usr/share/licenses/toofan/LICENSE"
 
+changelog:
+  disable: true
+
 release:
   github:
     owner: vyrx-dev
     name: toofan
-  header: |
-    ## What's New
-  # Let GitHub format it with contributor avatars
   make_latest: true
+  generate_release_notes: true
