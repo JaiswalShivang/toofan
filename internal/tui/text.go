@@ -9,10 +9,11 @@ import (
 )
 
 // colorText renders visible lines with typed/error/cursor/untyped styling
-func colorText(g *game.Game, p theme.Palette, lines []string, top, bot int) string {
+func colorText(g *game.Game, p theme.Palette, lines []string, top, bot int, ghostPos int) string {
 	ok := lipgloss.NewStyle().Foreground(p.Typed)
 	bad := lipgloss.NewStyle().Foreground(p.Error).Underline(true)
 	cur := lipgloss.NewStyle().Foreground(p.Background).Background(p.Cursor)
+	ghost := lipgloss.NewStyle().Foreground(p.Accent).Underline(true)
 	dim := lipgloss.NewStyle().Foreground(p.Foreground)
 
 	typed := len(g.Input())
@@ -40,6 +41,8 @@ func colorText(g *game.Game, p theme.Palette, lines []string, top, bot int) stri
 				out.WriteString(ok.Render(s))
 			case pos == typed:
 				out.WriteString(cur.Render(s))
+			case pos == ghostPos:
+				out.WriteString(ghost.Render(s))
 			default:
 				out.WriteString(dim.Render(s))
 			}
