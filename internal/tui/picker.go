@@ -1,6 +1,7 @@
 package tui
 
 import (
+	"fmt"
 	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -25,6 +26,7 @@ func (m model) handlePicker(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	case "enter":
 		m.lang = lang.Names[m.langCur]
 		m.pickingLang = false
+		m.activeRace = nil
 		m.game = game.New(m.duration, m.mode, m.lang, m.difficulty)
 		m.save()
 	case "esc":
@@ -54,6 +56,7 @@ func (m model) handleLessonPicker(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		}
 	case "enter":
 		m.pickingLesson = false
+		m.activeRace = nil
 		m.game = game.New(m.duration, m.mode, m.lang, m.difficulty)
 		if m.lessonCur > 0 && m.lessonCur <= len(snippets) {
 			m.game.Snippet = snippets[m.lessonCur-1]
@@ -132,6 +135,56 @@ func (m model) viewDurPicker(p theme.Palette) string {
 
 func (m model) viewDifficultyPicker(p theme.Palette) string {
 	return renderList(p, "difficulty", difficulties, nil, m.diffCur)
+}
+
+func (m model) handleRacePicker(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
+	switch msg.String() {
+	case "up", "k":
+		if m.raceCur > 0 {
+			m.raceCur--
+		}
+	case "down", "j":
+		if m.raceCur < len(m.races)-1 {
+			m.raceCur++
+		}
+	case "enter":
+		if len(m.races) > 0 {
+			r := m.races[m.raceCur]
+			m.activeRace = &r
+			m.duration = r.Duration
+			m.mode = r.Mode
+			m.lang = r.Language
+			m.difficulty = r.Difficulty
+			m.game = game.New(m.duration, m.mode, m.lang, m.difficulty)
+			m.game.SetText(r.Text)
+			m.save()
+		}
+		m.pickingRace = false
+	case "esc":
+		m.pickingRace = false
+	}
+	return m, nil
+}
+
+func (m model) viewRacePicker(p theme.Palette) string {
+	if len(m.races) == 0 {
+		return renderList(p, "race history", []string{"no races"}, nil, 0)
+	}
+
+	names := make([]string, len(m.races))
+	for i, r := range m.races {
+		names[i] = fmt.Sprintf("%s · %s · %ds · %.0f wpm · %.0f%%",
+			r.At, raceModeLabel(r), r.Duration, r.Stats.WPM, r.Stats.Accuracy,
+		)
+	}
+	return renderList(p, "race history", names, nil, m.raceCur)
+}
+
+func raceModeLabel(r game.RaceRecord) string {
+	if r.Mode == "code" {
+		return "code:" + r.Language
+	}
+	return "words"
 }
 
 // clean list — no borders, just highlighted selection, padded uniformly
