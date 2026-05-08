@@ -24,8 +24,7 @@ func (m model) handleResults(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 			return m, nil
 		}
 	case "tab":
-		m.duration = nextDur(m.duration)
-		m.save()
+		// restart immediately after a finished test
 	case "ctrl+t":
 		theme.Next()
 		m.save()
@@ -34,6 +33,15 @@ func (m model) handleResults(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 			m.showingErrors = false
 			return m, nil
 		}
+		m.pickingDur = true
+		m.durCur = 0
+		for i, d := range durations {
+			if d == m.duration {
+				m.durCur = i
+			}
+		}
+		m.active = screenTyping
+		return m, nil
 	}
 
 	if m.showingErrors {
