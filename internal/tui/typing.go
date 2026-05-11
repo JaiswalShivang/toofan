@@ -15,13 +15,6 @@ import (
 func (m model) handleTyping(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	switch msg.String() {
 	case "esc":
-		m.game = game.New(m.duration, m.mode, m.lang, m.difficulty)
-		if m.activeRace != nil {
-			m.game.SetText(m.activeRace.Text)
-		}
-		return m, nil
-
-	case "tab":
 		m.pickingDur = true
 		m.durCur = 0
 		for i, d := range durations {
@@ -30,6 +23,12 @@ func (m model) handleTyping(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 			}
 		}
 		return m, nil
+
+	case "tab":
+		m.game = game.New(m.duration, m.mode, m.lang, m.difficulty)
+		if m.activeRace != nil {
+			m.game.SetText(m.activeRace.Text)
+		}
 
 	case "ctrl+d":
 		if m.mode == "words" {
@@ -273,8 +272,8 @@ func (m model) viewHelp(p theme.Palette) string {
 		val.Render("ctrl+p") + dim.Render("    open profile"),
 		val.Render("ctrl+d") + dim.Render("    change difficulty (words mode only)"),
 		val.Render("ctrl+g") + dim.Render("    race against previous run"),
-		val.Render("tab") + dim.Render("       change duration & restart"),
-		val.Render("esc") + dim.Render("       restart test immediately"),
+		val.Render("tab") + dim.Render("       restart test"),
+		val.Render("esc") + dim.Render("       configure duration"),
 		val.Render("e") + dim.Render("         view error words (results screen)"),
 		val.Render("?") + dim.Render("         show this help"),
 		"",
