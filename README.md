@@ -4,7 +4,14 @@
 
 **A minimal, lightning-fast typing TUI**  
 _Practice with english words or real code snippets. No browser, no account, everything stays local._
-
+<p align="center">
+  <i>Featured on</i>
+</p>
+<p align="center">
+  <a href="https://terminaltrove.com/toofan/">
+    <img width="15%" alt="Terminal Trove logo" src="https://github.com/user-attachments/assets/f85b1470-a574-4bc2-b002-4e6dddb9e277" />
+  </a>
+</p>
 <br>
 
 <img src="assets/main.gif" alt="toofan demo" width="750">
@@ -196,3 +203,5 @@ If you're using an AI coding assistant, read [`AGENTS.md`](AGENTS.md) first.
    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=vyrx-dev/toofan&type=date&legend=top-left" />
  </picture>
 </a>
+
+
