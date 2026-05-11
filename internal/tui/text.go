@@ -35,14 +35,14 @@ func colorText(g *game.Game, p theme.Palette, lines []string, top, bot int, ghos
 		for _, ch := range lines[i] {
 			s := string(ch)
 			switch {
-			case pos < typed && g.Errors()[pos]:
-				out.WriteString(bad.Render(s))
-			case pos < typed:
-				out.WriteString(ok.Render(s))
 			case pos == typed:
 				out.WriteString(cur.Render(s))
 			case pos == ghostPos:
 				out.WriteString(ghost.Render(s))
+			case pos < typed && g.Errors()[pos]:
+				out.WriteString(bad.Render(s))
+			case pos < typed:
+				out.WriteString(ok.Render(s))
 			default:
 				out.WriteString(dim.Render(s))
 			}

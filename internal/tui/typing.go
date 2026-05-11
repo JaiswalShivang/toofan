@@ -110,7 +110,7 @@ func (m model) handleTyping(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 				m.msgTime = time.Now()
 				return m, nil
 			}
-			m.raceCur = len(m.races) - 1
+			m.raceCur = 0
 			m.pickingRace = true
 			return m, nil
 		}
@@ -236,12 +236,12 @@ func (m model) viewTyping(p theme.Palette) string {
 		} else {
 			modeLabel = "words"
 		}
-		info := dim.Render(modeLabel + " · ? help")
-		out = append(out, "", info)
+		infoStr := modeLabel + " · ? help"
 		if m.activeRace != nil {
-			tag := fmt.Sprintf("racing old %.0f wpm", m.activeRace.Stats.WPM)
-			out = append(out, dim.Render(tag))
+			infoStr += fmt.Sprintf(" · old %.0f", m.activeRace.Stats.WPM)
 		}
+		info := dim.Render(infoStr)
+		out = append(out, "", info)
 	}
 
 	body := lipgloss.JoinVertical(lipgloss.Center, out...)

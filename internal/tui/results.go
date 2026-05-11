@@ -40,6 +40,11 @@ func (m model) handleResults(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 				m.durCur = i
 			}
 		}
+		m.game = game.New(m.duration, m.mode, m.lang, m.difficulty)
+		if m.activeRace != nil {
+			m.game.SetText(m.activeRace.Text)
+		}
+		m.showingErrors = false
 		m.active = screenTyping
 		return m, nil
 	}

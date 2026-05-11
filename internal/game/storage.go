@@ -115,20 +115,27 @@ func SavePB(duration int, mode string, wpm float64) {
 
 func SaveRace(r RaceRecord) {
 	os.MkdirAll(dataDir, 0755)
-	f, err := os.OpenFile(
-		filepath.Join(dataDir, "races.txt"),
-		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644,
-	)
+	path := filepath.Join(dataDir, "races.txt")
+
+	races := LoadRaces()
+	races = append(races, r)
+	if len(races) > 10 {
+		races = races[len(races)-10:]
+	}
+
+	f, err := os.Create(path)
 	if err != nil {
 		return
 	}
 	defer f.Close()
 
-	b, err := json.Marshal(r)
-	if err != nil {
-		return
+	for _, rec := range races {
+		b, err := json.Marshal(rec)
+		if err != nil {
+			continue
+		}
+		fmt.Fprintln(f, string(b))
 	}
-	_, _ = fmt.Fprintln(f, string(b))
 }
 
 func LoadRaces() []RaceRecord {
@@ -150,6 +157,9 @@ func LoadRaces() []RaceRecord {
 			continue
 		}
 		out = append(out, r)
+	}
+	for i, j := 0, len(out)-1; i < j; i, j = i+1, j-1 {
+		out[i], out[j] = out[j], out[i]
 	}
 	return out
 }
@@ -231,7 +241,7 @@ func SaveBackup() (string, error) {
 	dest := filepath.Join(backupDir, fmt.Sprintf("toofan_backup_%s.txt", stamp))
 
 	var bundle strings.Builder
-	for _, name := range []string{"results.txt", "pb.txt", "config.txt"} {
+	for _, name := range []string{"results.txt", "pb.txt", "config.txt", "races.txt"} {
 		data, err := os.ReadFile(filepath.Join(dataDir, name))
 		if err != nil {
 			continue
